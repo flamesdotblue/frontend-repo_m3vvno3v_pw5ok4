@@ -1,40 +1,25 @@
 import React from 'react';
-import { FileText, CheckCircle2, Clock, AlertCircle } from 'lucide-react';
+import { CheckCircle, Clock, AlertTriangle, FileText } from 'lucide-react';
 
-const Stat = ({ icon: Icon, label, value, trend, trendLabel, color }) => (
-  <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
-    <div className="flex items-center justify-between">
-      <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${color}`}> 
-        <Icon className="h-5 w-5 text-white" />
-      </div>
-      {trend !== undefined && (
-        <span className={`text-xs font-medium ${trend >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
-          {trend >= 0 ? '+' : ''}{trend}% {trendLabel}
-        </span>
-      )}
+const Card = ({ icon: Icon, label, value, color }) => (
+  <div className="flex items-center gap-4 p-4 bg-white rounded-xl border shadow-sm">
+    <div className={`p-3 rounded-lg ${color} bg-opacity-10 text-opacity-90`}>
+      <Icon className={`w-6 h-6 ${color.replace('bg-', 'text-')}`} />
     </div>
-    <div className="mt-3">
-      <p className="text-sm text-gray-500">{label}</p>
-      <p className="mt-1 text-2xl font-semibold text-gray-900">{value}</p>
+    <div>
+      <div className="text-slate-500 text-sm">{label}</div>
+      <div className="text-xl font-semibold text-slate-800">{value}</div>
     </div>
   </div>
 );
 
-const StatsCards = () => {
-  const stats = [
-    { icon: FileText, label: 'Total Documents', value: '1,284', trend: 8, trendLabel: 'this month', color: 'bg-indigo-600' },
-    { icon: CheckCircle2, label: 'Completed', value: '942', trend: 5, trendLabel: 'vs last month', color: 'bg-emerald-600' },
-    { icon: Clock, label: 'Waiting for Others', value: '221', trend: -3, trendLabel: 'pending', color: 'bg-amber-500' },
-    { icon: AlertCircle, label: 'Attention Needed', value: '17', color: 'bg-rose-600' },
-  ];
-
+export default function StatsCards({ stats }) {
   return (
-    <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {stats.map((s) => (
-        <Stat key={s.label} {...s} />
-      ))}
-    </section>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <Card icon={FileText} label="Total" value={stats?.total ?? 0} color="bg-slate-500" />
+      <Card icon={CheckCircle} label="Completed" value={stats?.completed ?? 0} color="bg-emerald-500" />
+      <Card icon={Clock} label="Waiting" value={stats?.waiting ?? 0} color="bg-indigo-500" />
+      <Card icon={AlertTriangle} label="Needs attention" value={stats?.attention ?? 0} color="bg-amber-500" />
+    </div>
   );
-};
-
-export default StatsCards;
+}

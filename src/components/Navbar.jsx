@@ -1,60 +1,47 @@
 import React from 'react';
-import { Shield, Search, Bell, Settings, User, Plus, Upload } from 'lucide-react';
+import { Plus, Search, Bell, User, FileText } from 'lucide-react';
 
-const Navbar = ({ onNewDocument }) => {
+export default function Navbar({ onNewDocument, onCreateTemplate, onUseTemplate }) {
   return (
-    <header className="sticky top-0 z-20 w-full border-b border-gray-200 bg-white/80 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-600 text-white">
-            <Shield className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="text-base font-semibold text-gray-900">SignFlow</p>
-            <p className="text-xs text-gray-500">Secure e-sign dashboard</p>
-          </div>
+    <header className="sticky top-0 z-20 bg-white/80 backdrop-blur border-b">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-3">
+        <div className="flex items-center gap-2 font-semibold text-slate-800">
+          <FileText className="w-6 h-6 text-indigo-600" />
+          <span>Signify</span>
         </div>
-
-        <div className="hidden flex-1 items-center justify-center px-6 md:flex">
-          <div className="relative w-full max-w-xl">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search documents, recipients, templates..."
-              className="w-full rounded-lg border border-gray-200 bg-white py-2 pl-9 pr-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100"
-            />
-          </div>
+        <div className="flex-1" />
+        <div className="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-50 border w-[320px]">
+          <Search className="w-4 h-4 text-slate-400" />
+          <input
+            className="bg-transparent outline-none w-full text-sm"
+            placeholder="Search documents, templates..."
+          />
         </div>
-
-        <div className="flex items-center gap-2 md:gap-3">
+        <div className="flex-1 md:flex-none" />
+        <div className="flex items-center gap-2">
           <button
             onClick={onNewDocument}
-            className="hidden items-center gap-2 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-indigo-700 md:flex"
+            className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-lg text-sm shadow-sm"
           >
-            <Plus className="h-4 w-4" /> New
+            <Plus className="w-4 h-4" /> New document
           </button>
-          <button className="inline-flex items-center gap-2 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm transition hover:bg-gray-50 md:hidden">
-            <Upload className="h-4 w-4" />
-          </button>
-          <button className="rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-            <Bell className="h-5 w-5" />
-          </button>
-          <button className="rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-            <Settings className="h-5 w-5" />
-          </button>
-          <div className="ml-1 flex items-center gap-2 rounded-full border border-gray-200 bg-white p-1 pl-2">
-            <div className="hidden text-right md:block">
-              <p className="text-xs font-medium text-gray-900">Alex Johnson</p>
-              <p className="text-[10px] text-gray-500">Admin</p>
-            </div>
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-white">
-              <User className="h-4 w-4" />
+          <div className="relative group">
+            <button className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-2 rounded-lg text-sm">
+              Templates
+            </button>
+            <div className="hidden group-hover:block absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg overflow-hidden">
+              <button onClick={onCreateTemplate} className="w-full text-left px-3 py-2 hover:bg-slate-50 text-sm">Create template</button>
+              <button onClick={onUseTemplate} className="w-full text-left px-3 py-2 hover:bg-slate-50 text-sm">Use template</button>
             </div>
           </div>
+          <button className="p-2 rounded-lg hover:bg-slate-100">
+            <Bell className="w-5 h-5 text-slate-500" />
+          </button>
+          <button className="p-2 rounded-full bg-slate-100">
+            <User className="w-5 h-5 text-slate-600" />
+          </button>
         </div>
       </div>
     </header>
   );
-};
-
-export default Navbar;
+}
